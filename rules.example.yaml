@@ -1,0 +1,41 @@
+# Each rule: WHEN a record matches, THEN do the actions.
+# Placeholders like {firstname} are filled from the record.
+# Field names below match HubSpot contact properties. For Zoho use lead_status, last_activity_time, etc.
+
+rules:
+  - name: Hot new lead - call in 1 hour
+    when:
+      all:
+        - { field: hs_lead_status, eq: NEW }
+        - { field: lead_score, gt: 75 }
+        - { field: notes_last_contacted, exists: false }
+    then:
+      - create_task: { title: "Call hot lead {firstname} {lastname}", body: "Score {lead_score}. Email: {email}", due_in_hours: 1, priority: high }
+      - notify: "🔥 Hot lead: {firstname} {lastname} ({email}), score {lead_score}"
+
+  - name: New lead untouched for 3 days
+    when:
+      all:
+        - { field: hs_lead_status, eq: NEW }
+        - { field: notes_last_contacted, exists: false }
+        - { field: createdate, older_than_days: 3 }
+    then:
+      - set: { hs_lead_status: ATTEMPTED_TO_CONTACT }
+      - create_task: { title: "Overdue: first touch for {firstname} {lastname}", due_in_hours: 4, priority: high }
+
+  - name: Stalled in progress - 10 days no contact
+    when:
+      all:
+        - { field: hs_lead_status, in: [IN_PROGRESS, ATTEMPTED_TO_CONTACT] }
+        - { field: notes_last_contacted, older_than_days: 10 }
+    then:
+      - create_task: { title: "Re-engage {firstname}: send case study + book call", due_in_hours: 24 }
+      - add_note: "Auto-flagged: no contact for 10+ days."
+
+  - name: Recently contacted - move to in progress
+    when:
+      all:
+        - { field: hs_lead_status, eq: ATTEMPTED_TO_CONTACT }
+        - { field: notes_last_contacted, newer_than_days: 3 }
+    then:
+      - set: { hs_lead_status: IN_PROGRESS }

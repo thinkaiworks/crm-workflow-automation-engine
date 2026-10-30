@@ -1,0 +1,7 @@
+[
+  {"id": "101", "firstname": "Sara", "lastname": "Mills", "email": "sara@acme.co", "hs_lead_status": "NEW", "createdate": "2026-10-30T08:00:00Z", "notes_last_contacted": null, "lead_score": 82},
+  {"id": "102", "firstname": "Dev", "lastname": "Patel", "email": "dev@brightco.io", "hs_lead_status": "NEW", "createdate": "2026-10-25T09:00:00Z", "notes_last_contacted": null, "lead_score": 40},
+  {"id": "103", "firstname": "Leo", "lastname": "Grant", "email": "leo@northwind.com", "hs_lead_status": "ATTEMPTED_TO_CONTACT", "createdate": "2026-10-20T09:00:00Z", "notes_last_contacted": "2026-10-28T15:00:00Z", "lead_score": 55},
+  {"id": "104", "firstname": "Mia", "lastname": "Wong", "email": "mia@fabrikam.com", "hs_lead_status": "IN_PROGRESS", "createdate": "2026-10-01T09:00:00Z", "notes_last_contacted": "2026-10-16T10:00:00Z", "lead_score": 71},
+  {"id": "105", "firstname": "Zed", "lastname": "Ali", "email": "zed@contoso.com", "hs_lead_status": "UNQUALIFIED", "createdate": "2026-09-01T09:00:00Z", "notes_last_contacted": "2026-09-05T09:00:00Z", "lead_score": 5}
+]
